@@ -1,42 +1,91 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+.App {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  padding: 15px;
+
+  width: 66%;
+  background-color: white;
+  margin: 200px auto;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+.left-section {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.container {
+  background-color: rgb(255, 243, 225);
+  padding: 15px;
+  color: black;
+  font-size: 22px;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
+.split {
+  border-radius: 0 8px 8px 0;
 }
 
-.card {
-  padding: 2em;
+.friends {
+  border-radius: 8px 0 0 0;
 }
 
-.read-the-docs {
-  color: #888;
+.addFriend {
+  border-radius: 0 0 0 8px;
 }
+
+/* SPLIT COMPONENT STYLING */
+
+.split-input {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  font-size: 17px;
+  margin-bottom: 20px;
+  margin-left: 10px;
+}
+
+.split-input input,
+.split-input select,
+.split-input button {
+  width: 130px;
+  padding: 10px;
+  box-sizing: border-box;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.split-title {
+  display: block;
+  margin: 5px auto 35px 10px;
+  font-size: 33px;
+}
+
+button {
+  background-color: orange;
+  color: white;
+  font-weight: bold;
+  border-radius: 4px;
+  cursor: pointer;
+  border: unset;
+}
+
+/* FRIENDS COMPONENT STYLING */
+.friends {
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+}
+
+.friend {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  border-radius: 8px 0 0 8px;
+  padding: 10px;
+}
+
