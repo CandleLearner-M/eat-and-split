@@ -5,8 +5,9 @@
   padding: 15px;
 
   width: 66%;
-  margin: 200px auto;
+  margin: 100px auto;
   border-radius: 8px;
+  align-items: start;
 }
 
 .left-section {
@@ -50,7 +51,7 @@
 
 .split-title {
   display: block;
-  margin: 5px auto 35px 10px;
+  margin: 17px auto 35px 10px;
   font-size: 33px;
 }
 
@@ -126,4 +127,31 @@ button {
   margin: 0 12px;
   width: 70px;
   padding: 10px;
+}
+
+/* ADD FRIEND COMPONENET STYLING */
+
+.addFriend {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  padding: 15px;
+}
+.add-input {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  font-size: 17px;
+  margin-bottom: 20px;
+  margin-left: 10px;
+}
+
+.add-input input,
+.add-input button {
+  width: 160px;
+  padding: 8px;
+  box-sizing: border-box;
+  border: 1px solid #ccc;
+  border-radius: 8px;
 }
