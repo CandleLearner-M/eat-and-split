@@ -1,44 +1,26 @@
-const initialFriends = [
-  {
-    id: 118836,
-    name: "Clark",
-    image: "https://i.pravatar.cc/48?u=118836",
-    balance: -7,
-  },
-  {
-    id: 933372,
-    name: "Sarah",
-    image: "https://i.pravatar.cc/48?u=933372",
-    balance: 20,
-  },
-  {
-    id: 499476,
-    name: "Anthony",
-    image: "https://i.pravatar.cc/48?u=499476",
-    balance: 0,
-  },
-];
+type FriendsProps = {
+  onSetSelected: React.Dispatch<React.SetStateAction<number | null>>;
+  friends: { id: number; name: string; image: string; balance: number }[];
+};
 
-export default function Friends({onSelectFriend}: {onSelectFriend: () => void}) {
+export default function Friends({ onSetSelected, friends }: FriendsProps) {
   return (
     <ul className="container friends">
-      {initialFriends.map((friend) => (
-        <Friend key={friend.id} {...friend} onSelectFriend={onSelectFriend} />
+      {friends.map((friend) => (
+        <Friend key={friend.id} {...friend} setSelected={onSetSelected} />
       ))}
     </ul>
   );
 }
 type FriendProps = {
-  id?: number;
+  id: number;
   name: string;
   image: string;
   balance: number;
-  onSelectFriend: () => void;
+  setSelected: (id: number) => void;
 };
 
-function Friend({ image, name, balance, onSelectFriend} : FriendProps) {
-
-  const [selected, setSelected] = useState(false);
+function Friend({ id, image, name, balance, setSelected }: FriendProps) {
   return (
     <li className="friend">
       <div className="friend-info">
@@ -52,7 +34,15 @@ function Friend({ image, name, balance, onSelectFriend} : FriendProps) {
           </span>
         </p>
       </div>
-      <button id="friend-button" onClick={onSelectFriend}>Select</button>
+      <button
+        id="friend-button"
+        onClick={() => {
+          console.log(id);
+          setSelected(id);
+        }}
+      >
+        Select
+      </button>
     </li>
   );
 }

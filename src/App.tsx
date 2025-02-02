@@ -4,23 +4,50 @@ import Friends from "./Friends";
 import Split from "./Split";
 import { useState } from "react";
 
+const initialFriends = [
+  {
+    id: 118836,
+    name: "Clark",
+    image: "https://i.pravatar.cc/48?u=118836",
+    balance: -7,
+  },
+  {
+    id: 933372,
+    name: "Sarah",
+    image: "https://i.pravatar.cc/48?u=933372",
+    balance: 20,
+  },
+  {
+    id: 499476,
+    name: "Anthony",
+    image: "https://i.pravatar.cc/48?u=499476",
+    balance: 0,
+  },
+];
+
 export default function App() {
 
-  // State for the Split component
-  const [splitShown, setSplitShown] = useState(true);
+  // State for the Users
+  const [friends, setFriends] = useState(initialFriends);
 
-  const toggleSplit = function () {
-    setSplitShown(!splitShown);
-  }
+  const addFriend = (user: { id: number; name: string; image: string; balance: number }) => {
+    setFriends([...friends, user]);
+  };
 
+
+
+  // State for the Friends component
+  const [selected, setSelected] = useState<null | number>(null);
+
+  const selectedUser = friends.find((friend) => friend.id === selected);
 
   return (
     <div className="App">
       <div className="left-section">
-        <Friends onSelectFriend={toggleSplit} />
-        <AddFriend />
+        <Friends  onSetSelected={setSelected} friends={friends} />
+        <AddFriend onAddFriend={addFriend} />
       </div>
-      <Split splitShown={splitShown} onToggleSplit={toggleSplit} />
+      <Split  user={selectedUser} />
     </div>
   );
 }
