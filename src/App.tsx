@@ -1,5 +1,6 @@
 import "./App.css";
-import  Split from "./Split";
+import Friends  from "./Friends";
+import Split from "./Split";
 
 export default function App() {
   return (
@@ -13,24 +14,10 @@ export default function App() {
   );
 }
 
-function Friends() {
-  return <div className="container friends">
-    <Friend />
-    <Friend />
-    <Friend />
-  </div>;
-}
-
-function Friend () {
-  return <div className="friend">
-    <div id="friend-avatar">
-      <img src="" alt="" />
-    </div>
-    <div id="friend-name">a</div>
-    <button id="friend-button">Select</button>
-  </div>
-}
-
 function AddFriend() {
-  return <div className="container addFriend"></div>;
+  return <div className="container addFriend">
+    <form action="POST">
+      
+    </form>
+  </div>;
 }
