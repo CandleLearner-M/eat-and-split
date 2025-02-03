@@ -1,33 +1,43 @@
 import type { Friend } from "./types";
-import { useState } from "react";
 
 type FriendsProps = {
-  onSetSelected: (id: Friend["id"]) => void;
+  onSetSelected: (id: Friend["id"] | null) => void;
   friends: Friend[];
   onOpenSplit: (isShown: boolean) => void;
+  selectedFriend: Friend | undefined;
+  splitShown: boolean;
 };
 
 export default function Friends({
   onSetSelected,
   friends,
   onOpenSplit,
+  selectedFriend,
+  splitShown,
 }: FriendsProps) {
   return (
     <ul className="container friends">
-      {friends.map((friend) => (
-        <Friend
-          key={friend.id}
-          {...friend}
-          setSelected={onSetSelected}
-          onOpenSplit={onOpenSplit}
-        />
-      ))}
+      {friends.map((friend) => {
+        const isSelected = selectedFriend?.id === friend.id;
+        return (
+          <Friend
+            key={friend.id}
+            {...friend}
+            setSelected={onSetSelected}
+            onOpenSplit={onOpenSplit}
+            splitShown={splitShown}
+            isSelected={isSelected}
+          />
+        );
+      })}
     </ul>
   );
 }
 type FriendProps = Friend & {
-  setSelected: (id: Friend["id"]) => void;
+  setSelected: (id: Friend["id"] | null) => void;
   onOpenSplit: (isShown: boolean) => void;
+  isSelected: boolean;
+  splitShown: boolean;
 };
 
 function Friend({
@@ -37,9 +47,9 @@ function Friend({
   balance,
   setSelected,
   onOpenSplit,
+  splitShown,
+  isSelected,
 }: FriendProps) {
-  const [currentFriendIsSplitShown, setCurrentFriendIsSplitShown] =
-    useState(false);
   return (
     <li className="friend">
       <div className="friend-info">
@@ -63,30 +73,23 @@ function Friend({
           )}
         </p>
       </div>
-      {currentFriendIsSplitShown && (
-        <button
-          id="friend-button"
-          onClick={() => {
-            onOpenSplit(false);
-            setCurrentFriendIsSplitShown(false);
-          }}
-        >
-          Close
-        </button>
-      )}
 
-      {!currentFriendIsSplitShown && (
-        <button
-          id="friend-button"
-          onClick={() => {
+      <button
+        id="friend-button"
+        onClick={() => {
+          if (isSelected) {
+            setSelected(null);
+            onOpenSplit(false);
+          }
+
+          if (!isSelected) {
             setSelected(id);
             onOpenSplit(true);
-            setCurrentFriendIsSplitShown(true);
-          }}
-        >
-          Select
-        </button>
-      )}
+          }
+        }}
+      >
+        {isSelected && splitShown ? "Close" : "Select"}
+      </button>
     </li>
   );
 }

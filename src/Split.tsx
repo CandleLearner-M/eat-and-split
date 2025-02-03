@@ -3,11 +3,17 @@ import type { Friend } from "./types";
 
 type SplitProps = {
   user: Friend | undefined;
-  onUpdateBalance: (id: Friend['id'], balance: number) => void;
+  onUpdateBalance: (id: Friend["id"], balance: number) => void;
   onCloseSplit: (showSplit: boolean) => void;
+  onSetSelected: (id: Friend["id"] | null) => void;
 };
 
-export default function Split({ user, onUpdateBalance, onCloseSplit }: SplitProps) {
+export default function Split({
+  user,
+  onUpdateBalance,
+  onCloseSplit,
+  onSetSelected,
+}: SplitProps) {
   type InputValue = number | "";
 
   const [billValue, setBillValue] = useState<InputValue>("");
@@ -31,6 +37,13 @@ export default function Split({ user, onUpdateBalance, onCloseSplit }: SplitProp
     );
   };
 
+  const reset = function () {
+    setBillValue("");
+    setYourExpense("");
+    setBillPayer("you");
+    onCloseSplit(false);
+    onSetSelected(null);
+  };
   const handleSplitBill = () => {
     if (!isValidSplit()) return;
     const numericYourExpense = toNumber(yourExpense);
@@ -43,13 +56,8 @@ export default function Split({ user, onUpdateBalance, onCloseSplit }: SplitProp
           : user.balance - numericYourExpense;
       onUpdateBalance(user.id, newBalance);
     }
-  };
 
-  const reset = function () {
-    setBillValue("");
-    setYourExpense("");
-    setBillPayer("you");
-    onCloseSplit(false);
+    reset();
   };
 
   return user ? (
@@ -59,7 +67,6 @@ export default function Split({ user, onUpdateBalance, onCloseSplit }: SplitProp
         onSubmit={(e) => {
           e.preventDefault();
           handleSplitBill();
-          reset();
         }}
       >
         <div className="split-input">
@@ -108,7 +115,7 @@ export default function Split({ user, onUpdateBalance, onCloseSplit }: SplitProp
           </select>
         </div>
         <div className="split-input">
-          <label htmlFor=""></label>
+          <label></label>
           <button type="submit">Split Bill</button>
         </div>
       </form>

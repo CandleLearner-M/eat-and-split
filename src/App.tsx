@@ -73,6 +73,8 @@ export default function App() {
           onSetSelected={setSelected}
           onOpenSplit={showSplit}
           friends={friends}
+          selectedFriend={selectedUser}
+          splitShown={splitShown}
         />
         {!addFriendShown && (
           <AddFriendButtonShow onShowAddFriend={showAddFriend} />
@@ -86,6 +88,7 @@ export default function App() {
           user={selectedUser}
           onCloseSplit={showSplit}
           onUpdateBalance={updateBalance}
+          onSetSelected={setSelected}
         />
       )}
     </div>
