@@ -29,9 +29,19 @@ function Friend({ id, image, name, balance, setSelected }: FriendProps) {
         </div>
         <p id="friend-name">
           <span className="friend-name">{name}</span>
-          <span className={`status ${balance < 0 ? 'red' : balance > 0 ? 'green' : ""}`}> 
-           {balance !== 0 ? `You owe ${name} ${balance}`: "You are even"}
-          </span>
+          {balance > 0 && (
+            <span className="status green">
+              {name} owes you {balance} MAD
+            </span>
+          )}
+          {balance < 0 && (
+            <span className="status red">
+              You owe {name} {Math.abs(balance)} MAD
+            </span>
+          )}
+          {balance === 0 && (
+            <span className="status">You and {name} are even</span>
+          )}
         </p>
       </div>
       <button

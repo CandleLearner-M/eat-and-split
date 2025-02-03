@@ -9,42 +9,60 @@ type SplitProps = {
         balance: number;
       }
     | undefined;
-    onUpdateBalance: (id: number, balance: number) => void
+  onUpdateBalance: (id: number, balance: number) => void;
 };
 
 export default function Split({ user, onUpdateBalance }: SplitProps) {
+  type InputValue = number | "";
 
-  const [billValue, setBillValue] = useState<null | number>(null);
-  const [yourExpense, setYourExpense] = useState<null | number>(null);
-
-  const friendExpense = billValue && yourExpense && billValue - yourExpense;
-
+  const [billValue, setBillValue] = useState<InputValue>("");
+  const [yourExpense, setYourExpense] = useState<InputValue>("");
   const [billPayer, setBillPayer] = useState<"you" | "yourFriend">("you");
 
-  const addingBalanceValidation =
-    billValue && yourExpense && friendExpense && yourExpense > 0 && user;
-  const setBlance = function () {
-    if (addingBalanceValidation && billPayer === "you") {
-      user.balance -= friendExpense;
-    } else if (addingBalanceValidation && billPayer === "yourFriend") {
-      user.balance += yourExpense;
+  const toNumber = (value: InputValue) =>
+    typeof value === "number" ? value : 0;
+
+  const friendExpense =
+    billValue !== "" && yourExpense !== ""
+      ? toNumber(billValue) - toNumber(yourExpense)
+      : "";
+
+  const isValidSplit = () => {
+    return (
+      billValue !== "" &&
+      yourExpense !== "" &&
+      toNumber(yourExpense) >= 0 &&
+      user !== undefined
+    );
+  };
+
+  const handleSplitBill = () => {
+    if (!isValidSplit()) return;
+    const numericYourExpense = toNumber(yourExpense);
+    const numericFriendExpense = toNumber(friendExpense);
+
+    if (user) {
+      const newBalance =
+        billPayer === "you"
+          ? user.balance + numericFriendExpense
+          : user.balance - numericYourExpense;
+      onUpdateBalance(user.id, newBalance);
     }
   };
 
   const reset = function () {
-    setBillValue(null);
-    setYourExpense(null);
+    setBillValue("");
+    setYourExpense("");
     setBillPayer("you");
-  }
+  };
 
-  return user  ? (
+  return user ? (
     <div className="container split">
       <h2 className="split-title">Split a bill with {user.name}</h2>
       <form
         onSubmit={(e) => {
           e.preventDefault();
-          setBlance();
-          onUpdateBalance(user.id, user.balance);
+          handleSplitBill();
           reset();
         }}
       >
@@ -54,7 +72,7 @@ export default function Split({ user, onUpdateBalance }: SplitProps) {
             type="number"
             name="billValue"
             id="billValue"
-            value={billValue ?? ""}
+            value={billValue}
             onChange={(e) => setBillValue(+e.target.value)}
             required
           />
@@ -65,7 +83,7 @@ export default function Split({ user, onUpdateBalance }: SplitProps) {
             type="number"
             name="yourExpense"
             id="yourExpense"
-            value={yourExpense ?? ""}
+            value={yourExpense}
             onChange={(e) => setYourExpense(+e.target.value)}
           />
         </div>
@@ -75,7 +93,7 @@ export default function Split({ user, onUpdateBalance }: SplitProps) {
             type="number"
             name="friendExpense"
             id="friendExpense"
-            value={friendExpense ?? ""}
+            value={friendExpense}
             disabled
           />
         </div>
