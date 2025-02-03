@@ -47,6 +47,7 @@
   box-sizing: border-box;
   border: 1px solid #ccc;
   border-radius: 8px;
+  outline: none;
 }
 
 .split-title {
@@ -123,8 +124,7 @@ button {
 }
 
 #friend-name .status {
-  font-size: 14px;
-  color: red;
+  font-size: 15px;
 }
 
 #friend-button {
@@ -169,4 +169,13 @@ button {
 
 .close button {
  padding: 10px;
+}
+
+
+.red {
+  color: red;
+}
+
+.green {
+  color: limegreen;
 }

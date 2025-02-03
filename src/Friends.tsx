@@ -29,8 +29,8 @@ function Friend({ id, image, name, balance, setSelected }: FriendProps) {
         </div>
         <p id="friend-name">
           <span className="friend-name">{name}</span>
-          <span className="status">
-            You owe {name} {balance}
+          <span className={`status ${balance < 0 ? 'red' : balance > 0 ? 'green' : ""}`}> 
+           {balance !== 0 ? `You owe ${name} ${balance}`: "You are even"}
           </span>
         </p>
       </div>

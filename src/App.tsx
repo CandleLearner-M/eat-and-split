@@ -1,4 +1,4 @@
-import  AddFriend  from "./AddFriend";
+import AddFriend from "./AddFriend";
 import "./App.css";
 import Friends from "./Friends";
 import Split from "./Split";
@@ -26,15 +26,28 @@ const initialFriends = [
 ];
 
 export default function App() {
-
   // State for the Users
   const [friends, setFriends] = useState(initialFriends);
 
-  const addFriend = (user: { id: number; name: string; image: string; balance: number }) => {
+  const addFriend = (user: {
+    id: number;
+    name: string;
+    image: string;
+    balance: number;
+  }) => {
     setFriends([...friends, user]);
   };
 
-
+  const updateBalance = (id: number, balance: number) => {
+    setFriends((friends) =>
+      friends.map((friend) => {
+        if (friend.id === id) {
+          return { ...friend, balance };
+        }
+        return friend;
+      })
+    );
+  };
 
   // State for the Friends component
   const [selected, setSelected] = useState<null | number>(null);
@@ -44,10 +57,10 @@ export default function App() {
   return (
     <div className="App">
       <div className="left-section">
-        <Friends  onSetSelected={setSelected} friends={friends} />
+        <Friends onSetSelected={setSelected} friends={friends} />
         <AddFriend onAddFriend={addFriend} />
       </div>
-      <Split  user={selectedUser} />
+      <Split user={selectedUser} onUpdateBalance={updateBalance} />
     </div>
   );
 }
