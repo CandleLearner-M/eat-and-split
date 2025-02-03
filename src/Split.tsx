@@ -1,15 +1,9 @@
 import { useState } from "react";
+import type { Friend } from "./types";
 
 type SplitProps = {
-  user:
-    | {
-        id: number;
-        name: string;
-        image: string;
-        balance: number;
-      }
-    | undefined;
-  onUpdateBalance: (id: number, balance: number) => void;
+  user: Friend | undefined;
+  onUpdateBalance: (id: Friend['id'], balance: number) => void;
 };
 
 export default function Split({ user, onUpdateBalance }: SplitProps) {

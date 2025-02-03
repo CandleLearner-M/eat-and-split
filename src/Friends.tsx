@@ -1,6 +1,8 @@
+import type { Friend } from "./types";
+
 type FriendsProps = {
-  onSetSelected: React.Dispatch<React.SetStateAction<number | null>>;
-  friends: { id: number; name: string; image: string; balance: number }[];
+  onSetSelected: (id: Friend['id']) => void;
+  friends:Friend[];
 };
 
 export default function Friends({ onSetSelected, friends }: FriendsProps) {
@@ -12,12 +14,8 @@ export default function Friends({ onSetSelected, friends }: FriendsProps) {
     </ul>
   );
 }
-type FriendProps = {
-  id: number;
-  name: string;
-  image: string;
-  balance: number;
-  setSelected: (id: number) => void;
+type FriendProps = Friend & {
+  setSelected: (id: Friend['id']) => void;
 };
 
 function Friend({ id, image, name, balance, setSelected }: FriendProps) {

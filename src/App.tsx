@@ -3,6 +3,7 @@ import "./App.css";
 import Friends from "./Friends";
 import Split from "./Split";
 import { useState } from "react";
+import type { Friend } from "./types";
 
 const initialFriends = [
   {
@@ -25,20 +26,18 @@ const initialFriends = [
   },
 ];
 
-export default function App() {
-  // State for the Users
-  const [friends, setFriends] = useState(initialFriends);
 
-  const addFriend = (user: {
-    id: number;
-    name: string;
-    image: string;
-    balance: number;
-  }) => {
-    setFriends([...friends, user]);
+
+export default function App() {
+
+  // State for the Users
+  const [friends, setFriends] = useState<Friend[]>(initialFriends);
+
+  const addFriend = (user: Friend) => {
+    setFriends(friends => [...friends, user]);
   };
 
-  const updateBalance = (id: number, balance: number) => {
+  const updateBalance = (id: Friend['id'], balance: number) => {
     setFriends((friends) =>
       friends.map((friend) => {
         if (friend.id === id) {
@@ -50,7 +49,7 @@ export default function App() {
   };
 
   // State for the Friends component
-  const [selected, setSelected] = useState<null | number>(null);
+  const [selected, setSelected] = useState<null | Friend['id']>(null);
 
   const selectedUser = friends.find((friend) => friend.id === selected);
 

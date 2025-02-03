@@ -1,12 +1,8 @@
 import { useState } from "react";
+import type { Friend } from "./types";
 
 type AddFriendProps = {
-  onAddFriend: (user: {
-    id: number;
-    name: string;
-    image: string;
-    balance: number;
-  }) => void;
+  onAddFriend: (user: Friend) => void;
 };
 
 export default function AddFriend({ onAddFriend }: AddFriendProps) {
@@ -19,8 +15,12 @@ export default function AddFriend({ onAddFriend }: AddFriendProps) {
       friendName: string;
       friendImage: string;
     };
+
+    if (!data.friendName || !data.friendImage) return;
+
+    const id = crypto.randomUUID();
     const newFriend = {
-      id: Math.floor(Math.random() * 1000000),
+      id,
       name: data.friendName,
       image: data.friendImage,
       balance: 0,
@@ -37,7 +37,7 @@ export default function AddFriend({ onAddFriend }: AddFriendProps) {
         <form onSubmit={handleSubmit}>
           <div className="add-input">
             <label htmlFor="friendName">👫 Friend's Name</label>
-            <input type="text" name="friendName" id="friendName" required />
+            <input type="text" name="friendName" id="friendName"  />
           </div>
           <div className="add-input">
             <label htmlFor="friendImage">📷 Friend's Image URL</label>
@@ -46,7 +46,7 @@ export default function AddFriend({ onAddFriend }: AddFriendProps) {
               name="friendImage"
               id="friendImage"
               defaultValue="https://i.pravatar.cc"
-              required
+              
             />
           </div>
           <div className="add-input">
