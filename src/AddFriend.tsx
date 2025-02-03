@@ -1,13 +1,11 @@
-import { useState } from "react";
 import type { Friend } from "./types";
 
 type AddFriendProps = {
   onAddFriend: (user: Friend) => void;
+  onCloseAddFriend: (showAddFriend: boolean) => void;
 };
 
-export default function AddFriend({ onAddFriend }: AddFriendProps) {
-  const [addFriendShown, setAddFriendShown] = useState(false);
-
+export default function AddFriend({ onAddFriend, onCloseAddFriend }: AddFriendProps) {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
@@ -28,16 +26,15 @@ export default function AddFriend({ onAddFriend }: AddFriendProps) {
     console.log(newFriend);
     onAddFriend(newFriend);
 
-    setAddFriendShown(false);
   };
 
-  return addFriendShown ? (
+  return (
     <>
       <div className="container addFriend">
         <form onSubmit={handleSubmit}>
           <div className="add-input">
             <label htmlFor="friendName">👫 Friend's Name</label>
-            <input type="text" name="friendName" id="friendName"  />
+            <input type="text" name="friendName" id="friendName" />
           </div>
           <div className="add-input">
             <label htmlFor="friendImage">📷 Friend's Image URL</label>
@@ -46,7 +43,6 @@ export default function AddFriend({ onAddFriend }: AddFriendProps) {
               name="friendImage"
               id="friendImage"
               defaultValue="https://i.pravatar.cc"
-              
             />
           </div>
           <div className="add-input">
@@ -57,19 +53,10 @@ export default function AddFriend({ onAddFriend }: AddFriendProps) {
       </div>
 
       <div className="close">
-        <button onClick={() => setAddFriendShown(!addFriendShown)}>
+        <button onClick={() => onCloseAddFriend(false)}>
           Close
         </button>
       </div>
     </>
-  ) : (
-    <div className="addFriend">
-      <div className="add-input">
-        <label></label>
-        <button onClick={() => setAddFriendShown(!addFriendShown)}>
-          Add Friend
-        </button>
-      </div>
-    </div>
   );
 }

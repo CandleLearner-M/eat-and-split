@@ -2,6 +2,7 @@ import AddFriend from "./AddFriend";
 import "./App.css";
 import Friends from "./Friends";
 import Split from "./Split";
+import AddFriendButtonShow from "./AddFriendButtonShow";
 import { useState } from "react";
 import type { Friend } from "./types";
 
@@ -26,18 +27,23 @@ const initialFriends = [
   },
 ];
 
-
-
 export default function App() {
-
   // State for the Users
   const [friends, setFriends] = useState<Friend[]>(initialFriends);
 
-  const addFriend = (user: Friend) => {
-    setFriends(friends => [...friends, user]);
+  // State for the AddFriend component
+  const [addFriendShown, setAddFriendShown] = useState(false);
+
+  const showAddFriend = function (showAddFriend: boolean) {
+    setAddFriendShown(showAddFriend);
   };
 
-  const updateBalance = (id: Friend['id'], balance: number) => {
+  const addFriend = (user: Friend) => {
+    setFriends((friends) => [...friends, user]);
+    showAddFriend(false);
+  };
+
+  const updateBalance = (id: Friend["id"], balance: number) => {
     setFriends((friends) =>
       friends.map((friend) => {
         if (friend.id === id) {
@@ -49,17 +55,39 @@ export default function App() {
   };
 
   // State for the Friends component
-  const [selected, setSelected] = useState<null | Friend['id']>(null);
+  const [selected, setSelected] = useState<null | Friend["id"]>(null);
 
   const selectedUser = friends.find((friend) => friend.id === selected);
+
+  // Split component State
+  const [splitShown, setSplitShown] = useState(false);
+
+  const showSplit = function (showSplit: boolean) {
+    setSplitShown(showSplit);
+  };
 
   return (
     <div className="App">
       <div className="left-section">
-        <Friends onSetSelected={setSelected} friends={friends} />
-        <AddFriend onAddFriend={addFriend} />
+        <Friends
+          onSetSelected={setSelected}
+          onOpenSplit={showSplit}
+          friends={friends}
+        />
+        {!addFriendShown && (
+          <AddFriendButtonShow onShowAddFriend={showAddFriend} />
+        )}
+        {addFriendShown && (
+          <AddFriend onAddFriend={addFriend} onCloseAddFriend={showAddFriend} />
+        )}
       </div>
-      <Split user={selectedUser} onUpdateBalance={updateBalance} />
+      {splitShown && (
+        <Split
+          user={selectedUser}
+          onCloseSplit={showSplit}
+          onUpdateBalance={updateBalance}
+        />
+      )}
     </div>
   );
 }

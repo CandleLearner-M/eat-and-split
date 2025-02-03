@@ -4,9 +4,10 @@ import type { Friend } from "./types";
 type SplitProps = {
   user: Friend | undefined;
   onUpdateBalance: (id: Friend['id'], balance: number) => void;
+  onCloseSplit: (showSplit: boolean) => void;
 };
 
-export default function Split({ user, onUpdateBalance }: SplitProps) {
+export default function Split({ user, onUpdateBalance, onCloseSplit }: SplitProps) {
   type InputValue = number | "";
 
   const [billValue, setBillValue] = useState<InputValue>("");
@@ -48,6 +49,7 @@ export default function Split({ user, onUpdateBalance }: SplitProps) {
     setBillValue("");
     setYourExpense("");
     setBillPayer("you");
+    onCloseSplit(false);
   };
 
   return user ? (

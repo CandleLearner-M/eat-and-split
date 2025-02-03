@@ -1,24 +1,45 @@
 import type { Friend } from "./types";
+import { useState } from "react";
 
 type FriendsProps = {
-  onSetSelected: (id: Friend['id']) => void;
-  friends:Friend[];
+  onSetSelected: (id: Friend["id"]) => void;
+  friends: Friend[];
+  onOpenSplit: (isShown: boolean) => void;
 };
 
-export default function Friends({ onSetSelected, friends }: FriendsProps) {
+export default function Friends({
+  onSetSelected,
+  friends,
+  onOpenSplit,
+}: FriendsProps) {
   return (
     <ul className="container friends">
       {friends.map((friend) => (
-        <Friend key={friend.id} {...friend} setSelected={onSetSelected} />
+        <Friend
+          key={friend.id}
+          {...friend}
+          setSelected={onSetSelected}
+          onOpenSplit={onOpenSplit}
+        />
       ))}
     </ul>
   );
 }
 type FriendProps = Friend & {
-  setSelected: (id: Friend['id']) => void;
+  setSelected: (id: Friend["id"]) => void;
+  onOpenSplit: (isShown: boolean) => void;
 };
 
-function Friend({ id, image, name, balance, setSelected }: FriendProps) {
+function Friend({
+  id,
+  image,
+  name,
+  balance,
+  setSelected,
+  onOpenSplit,
+}: FriendProps) {
+  const [currentFriendIsSplitShown, setCurrentFriendIsSplitShown] =
+    useState(false);
   return (
     <li className="friend">
       <div className="friend-info">
@@ -42,15 +63,30 @@ function Friend({ id, image, name, balance, setSelected }: FriendProps) {
           )}
         </p>
       </div>
-      <button
-        id="friend-button"
-        onClick={() => {
-          console.log(id);
-          setSelected(id);
-        }}
-      >
-        Select
-      </button>
+      {currentFriendIsSplitShown && (
+        <button
+          id="friend-button"
+          onClick={() => {
+            onOpenSplit(false);
+            setCurrentFriendIsSplitShown(false);
+          }}
+        >
+          Close
+        </button>
+      )}
+
+      {!currentFriendIsSplitShown && (
+        <button
+          id="friend-button"
+          onClick={() => {
+            setSelected(id);
+            onOpenSplit(true);
+            setCurrentFriendIsSplitShown(true);
+          }}
+        >
+          Select
+        </button>
+      )}
     </li>
   );
 }
