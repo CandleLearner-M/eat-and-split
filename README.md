@@ -8,18 +8,16 @@ A simple React + TypeScript application built with Vite that lets you add friend
 - [Features](#features)
 - [Tech Stack](#tech-stack)
 - [Installation](#installation)
-- [Usage](#usage)
 - [Project Structure](#project-structure)
-- [Contributing](#contributing)
-- [License](#license)
 
 ## Overview
 
 Eat and Split is a small interactive application where you can:
+
 - Add a new friend with their details.
 - Select a friend to split a bill with.
 - Fill in the bill details and update the balance accordingly.
-  
+
 The application leverages React functional components, hooks (useState), and TypeScript for robust type-checking and error prevention.
 
 ## Features
@@ -50,3 +48,23 @@ The application leverages React functional components, hooks (useState), and Typ
    ```bash
    git clone https://github.com/yourusername/eat-and-split.git
    cd eat-and-split
+   ```
+
+## Project Structure
+
+eat-and-split/
+├── public/
+│ └── index.html # HTML template
+├── src/
+│ ├── App.tsx # Main application component
+│ ├── AddFriend.tsx # Component for adding new friends
+│ ├── AddFriendButtonShow.tsx # Button component to show the add friend form
+│ ├── Friends.tsx # Component displaying the list of friends
+│ ├── Split.tsx # Component for splitting the bill with a friend
+│ ├── types.ts # TypeScript types used across the project
+│ ├── index.css # Global CSS styles
+│ └── main.tsx # Application entry point
+├── .gitignore
+├── package.json
+├── tsconfig.json
+└── README.md # Project documentation (this file)
