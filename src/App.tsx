@@ -34,9 +34,6 @@ export default function App() {
   // State for the AddFriend component
   const [addFriendShown, setAddFriendShown] = useState(false);
 
-  const showAddFriend = function (showAddFriend: boolean) {
-    setAddFriendShown(showAddFriend);
-  };
 
   const addFriend = (user: Friend) => {
     setFriends((friends) => [...friends, user]);
@@ -59,6 +56,13 @@ export default function App() {
 
   const setSelectedFriend = function (user: Friend | null) {
     setSelected(friend => friend?.id === user?.id ? null : user);
+    setAddFriendShown(false)
+  };
+
+  // SHow AddFriend component and hide Split component
+  const showAddFriend = function (showAddFriend: boolean) {
+    setAddFriendShown(showAddFriend);
+    setSelected(null);
   };
 
   return (
