@@ -179,3 +179,7 @@ button {
 .green {
   color: limegreen;
 }
+
+.selected {
+  background-color: rgb(255, 243, 225);
+}

@@ -51,7 +51,7 @@ function Friend({
   isSelected,
 }: FriendProps) {
   return (
-    <li className="friend">
+    <li className={`friend ${isSelected ? "selected" : ""}`}>
       <div className="friend-info">
         <div id="friend-avatar">
           <img src={image} alt={name} />
