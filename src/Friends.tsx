@@ -33,8 +33,6 @@ type FriendProps = {
 };
 
 function Friend({ friend, setSelected, selectedFriend }: FriendProps) {
-
-
   const { id, image, name, balance } = friend;
 
   const isSelected = selectedFriend?.id === id;
@@ -62,18 +60,9 @@ function Friend({ friend, setSelected, selectedFriend }: FriendProps) {
         </p>
       </div>
 
-      <button
-        id="friend-button"
-        onClick={() => {
-          if (isSelected) {
-            setSelected(null);
-          }
-
-          if (!isSelected) {
-            setSelected(friend);
-          }
-        }}
-      >
+      <button id="friend-button" onClick={() => {
+        setSelected(friend)
+      }}>
         {isSelected ? "Close" : "Select"}
       </button>
     </li>

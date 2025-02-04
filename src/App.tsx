@@ -58,7 +58,7 @@ export default function App() {
   const [selected, setSelected] = useState<null | Friend>(null);
 
   const setSelectedFriend = function (user: Friend | null) {
-    setSelected(user);
+    setSelected(friend => friend?.id === user?.id ? null : user);
   };
 
   return (
