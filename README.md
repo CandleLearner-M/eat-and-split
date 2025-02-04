@@ -52,6 +52,7 @@ The application leverages React functional components, hooks (useState), and Typ
 
 ## Project Structure
 
+```
 eat-and-split/
 ├── public/
 │ └── index.html # HTML template
@@ -68,3 +69,4 @@ eat-and-split/
 ├── package.json
 ├── tsconfig.json
 └── README.md # Project documentation (this file)
+```
