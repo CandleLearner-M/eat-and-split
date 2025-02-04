@@ -84,7 +84,11 @@ export default function Split({
             name="yourExpense"
             id="yourExpense"
             value={yourExpense}
-            onChange={(e) => setYourExpense(+e.target.value)}
+            onChange={(e) =>
+              setYourExpense(
+                +e.target.value > +billValue ? yourExpense : +e.target.value
+              )
+            }
           />
         </div>
         <div className="split-input">
