@@ -2,16 +2,14 @@ import { useState } from "react";
 import type { Friend } from "./types";
 
 type SplitProps = {
-  user: Friend | undefined;
+  user: Friend | null;
   onUpdateBalance: (id: Friend["id"], balance: number) => void;
-  onCloseSplit: (showSplit: boolean) => void;
-  onSetSelected: (id: Friend["id"] | null) => void;
+  onSetSelected: (user: Friend | null) => void;
 };
 
 export default function Split({
   user,
   onUpdateBalance,
-  onCloseSplit,
   onSetSelected,
 }: SplitProps) {
   type InputValue = number | "";
@@ -41,7 +39,6 @@ export default function Split({
     setBillValue("");
     setYourExpense("");
     setBillPayer("you");
-    onCloseSplit(false);
     onSetSelected(null);
   };
   const handleSplitBill = () => {

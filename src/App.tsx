@@ -55,26 +55,19 @@ export default function App() {
   };
 
   // State for the Friends component
-  const [selected, setSelected] = useState<null | Friend["id"]>(null);
+  const [selected, setSelected] = useState<null | Friend>(null);
 
-  const selectedUser = friends.find((friend) => friend.id === selected);
-
-  // Split component State
-  const [splitShown, setSplitShown] = useState(false);
-
-  const showSplit = function (showSplit: boolean) {
-    setSplitShown(showSplit);
+  const setSelectedFriend = function (user: Friend | null) {
+    setSelected(user);
   };
 
   return (
     <div className="App">
       <div className="left-section">
         <Friends
-          onSetSelected={setSelected}
-          onOpenSplit={showSplit}
+          onSetSelected={setSelectedFriend}
           friends={friends}
-          selectedFriend={selectedUser}
-          splitShown={splitShown}
+          selectedFriend={selected}
         />
         {!addFriendShown && (
           <AddFriendButtonShow onShowAddFriend={showAddFriend} />
@@ -83,12 +76,11 @@ export default function App() {
           <AddFriend onAddFriend={addFriend} onCloseAddFriend={showAddFriend} />
         )}
       </div>
-      {splitShown && (
+      {selected && (
         <Split
-          user={selectedUser}
-          onCloseSplit={showSplit}
+          user={selected}
           onUpdateBalance={updateBalance}
-          onSetSelected={setSelected}
+          onSetSelected={setSelectedFriend}
         />
       )}
     </div>

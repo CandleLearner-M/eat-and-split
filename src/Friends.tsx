@@ -1,55 +1,43 @@
 import type { Friend } from "./types";
 
 type FriendsProps = {
-  onSetSelected: (id: Friend["id"] | null) => void;
+  onSetSelected: (user: Friend | null) => void;
   friends: Friend[];
-  onOpenSplit: (isShown: boolean) => void;
-  selectedFriend: Friend | undefined;
-  splitShown: boolean;
+  selectedFriend: Friend | null;
 };
 
 export default function Friends({
   onSetSelected,
   friends,
-  onOpenSplit,
   selectedFriend,
-  splitShown,
 }: FriendsProps) {
   return (
     <ul className="container friends">
       {friends.map((friend) => {
-        const isSelected = selectedFriend?.id === friend.id;
         return (
           <Friend
             key={friend.id}
-            {...friend}
+            friend={friend}
             setSelected={onSetSelected}
-            onOpenSplit={onOpenSplit}
-            splitShown={splitShown}
-            isSelected={isSelected}
+            selectedFriend={selectedFriend}
           />
         );
       })}
     </ul>
   );
 }
-type FriendProps = Friend & {
-  setSelected: (id: Friend["id"] | null) => void;
-  onOpenSplit: (isShown: boolean) => void;
-  isSelected: boolean;
-  splitShown: boolean;
+type FriendProps = {
+  friend: Friend;
+  setSelected: (user: Friend | null) => void;
+  selectedFriend: Friend | null;
 };
 
-function Friend({
-  id,
-  image,
-  name,
-  balance,
-  setSelected,
-  onOpenSplit,
-  splitShown,
-  isSelected,
-}: FriendProps) {
+function Friend({ friend, setSelected, selectedFriend }: FriendProps) {
+
+
+  const { id, image, name, balance } = friend;
+
+  const isSelected = selectedFriend?.id === id;
   return (
     <li className={`friend ${isSelected ? "selected" : ""}`}>
       <div className="friend-info">
@@ -79,16 +67,14 @@ function Friend({
         onClick={() => {
           if (isSelected) {
             setSelected(null);
-            onOpenSplit(false);
           }
 
           if (!isSelected) {
-            setSelected(id);
-            onOpenSplit(true);
+            setSelected(friend);
           }
         }}
       >
-        {isSelected && splitShown ? "Close" : "Select"}
+        {isSelected ? "Close" : "Select"}
       </button>
     </li>
   );
