@@ -40,13 +40,14 @@ The application leverages React functional components, hooks (useState), and Typ
 - **TypeScript**: For static type checking.
 - **Vite**: Build tool and development server.
 - **ESLint**: For code quality and consistent style.
+- **CSS**: For beautiful UI/UX
 
 ## Installation
 
 1. **Clone the Repository:**
 
    ```bash
-   git clone https://github.com/yourusername/eat-and-split.git
+   git clone https://github.com/CandleLearner-M/eat-and-split.git
    cd eat-and-split
    ```
 
