@@ -183,3 +183,17 @@ button {
 .selected {
   background-color: rgb(255, 243, 225);
 }
+
+footer {
+  position: relative;
+  bottom: 0;
+  text-align: center;
+  color: gray;
+  transform: translateY(140px);
+  padding: 10px;
+}
+
+footer a {
+  color: gray;
+  text-decoration: none;
+}

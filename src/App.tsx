@@ -34,7 +34,6 @@ export default function App() {
   // State for the AddFriend component
   const [addFriendShown, setAddFriendShown] = useState(false);
 
-
   const addFriend = (user: Friend) => {
     setFriends((friends) => [...friends, user]);
     showAddFriend(false);
@@ -55,8 +54,8 @@ export default function App() {
   const [selected, setSelected] = useState<null | Friend>(null);
 
   const setSelectedFriend = function (user: Friend | null) {
-    setSelected(friend => friend?.id === user?.id ? null : user);
-    setAddFriendShown(false)
+    setSelected((friend) => (friend?.id === user?.id ? null : user));
+    setAddFriendShown(false);
   };
 
   // SHow AddFriend component and hide Split component
@@ -66,27 +65,41 @@ export default function App() {
   };
 
   return (
-    <div className="App">
-      <div className="left-section">
-        <Friends
-          onSetSelected={setSelectedFriend}
-          friends={friends}
-          selectedFriend={selected}
-        />
-        {!addFriendShown && (
-          <AddFriendButtonShow onShowAddFriend={showAddFriend} />
-        )}
-        {addFriendShown && (
-          <AddFriend onAddFriend={addFriend} onCloseAddFriend={showAddFriend} />
+    <>
+      <div className="App">
+        <div className="left-section">
+          <Friends
+            onSetSelected={setSelectedFriend}
+            friends={friends}
+            selectedFriend={selected}
+          />
+          {!addFriendShown && (
+            <AddFriendButtonShow onShowAddFriend={showAddFriend} />
+          )}
+          {addFriendShown && (
+            <AddFriend
+              onAddFriend={addFriend}
+              onCloseAddFriend={showAddFriend}
+            />
+          )}
+        </div>
+        {selected && (
+          <Split
+            user={selected}
+            onUpdateBalance={updateBalance}
+            onSetSelected={setSelectedFriend}
+          />
         )}
       </div>
-      {selected && (
-        <Split
-          user={selected}
-          onUpdateBalance={updateBalance}
-          onSetSelected={setSelectedFriend}
-        />
-      )}
-    </div>
+      <CandleLearnerM />
+    </>
+  );
+}
+
+function CandleLearnerM() {
+  return (
+    <footer>
+      <a href="https://github.com/CandleLearner-M"> &#169; CandleLearner-M</a>
+    </footer>
   );
 }
